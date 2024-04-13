@@ -1,0 +1,18 @@
+.slider{
+    padding-top: 0px;
+    .container{
+        display: flex;
+        width: inherit;
+        height: fit-content;
+        justify-content: center;
+        padding-bottom: 30px;
+        .carousel{
+            width: 1200px;
+            display: inherit;
+            img{
+                width: 100%;
+                cursor: pointer;
+            }
+        }
+    }
+}

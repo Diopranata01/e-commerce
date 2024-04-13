@@ -1,0 +1,38 @@
+.header-products{
+    // border: solid 1px red;
+    position: relative;
+    padding-top: 70px;
+    .categories{
+        // border: solid 1px red;
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        align-items: center;
+        height: 70px;
+    }
+    .head-img{
+        overflow: hidden;
+        position: relative;
+        height: 420px;
+        img{
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(60%);
+        }
+        h1{
+            width: 500px;
+            font-size: 45px;
+            position: absolute; /* membuat h1 menjadi posisi absolut */
+            top: 50%; /* menempatkan h1 di tengah-tengah dari atas */
+            left: 28%; /* menempatkan h1 di tengah-tengah dari kiri */
+            transform: translate(-50%, -50%); /* untuk mengatur posisi h1 */
+            color: white; /* untuk memberi warna teks */
+            text-align: start; /* untuk mengatur posisi teks */
+        }
+    }
+}
+.body-products{
+    margin-top: 30px;
+}
