@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/scss/HomePage.scss";
 import {
   Card,
@@ -11,11 +11,18 @@ import { Box, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { AutoAwesome } from "@mui/icons-material";
 import ShapeButton from "../../components/Buttons/ShapeButton";
+import { api } from "../../services";
+
 
 const HomePage = () => {
+  const [banners, setBanners] = useState([]);
+  const [frameImage, setFrameImage] = useState([]);
+
+  console.log(frameImage);
+
   const secondData = {
     image:
-      "https://images.unsplash.com/photo-1643646018270-3e47f410521a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDU2fFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
+      "https://metaderma.id/wp-content/uploads/2023/06/DSC07202-scaled.jpg",
   };
   const framerData = [
     {
@@ -100,17 +107,52 @@ const HomePage = () => {
     },
   ];
 
+  const FetchBannerAds = async () => {
+    try {
+      const response = await fetch(
+        `${api}/api/banner/?is_active=true`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setBanners(data);
+    } catch (error) {
+      console.error("Error fetching banners:", error);
+    }
+  };
+
+  const FetchProduct = async () => {
+    try {
+      const response = await fetch(
+        `${api}/api/product/?level=OTC`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setFrameImage(data)  ;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  }
+
   const Header = () => {
     return (
       <>
         <Box className="heading" sx={{ display: "flex" }}>
-          <h1>New Season Featured</h1>
+          <h1>Our Vision</h1>
+          {/* <span>
+            Our New Featured Product in this month has started, staring beauty
+            item product, body works, and more .
+          </span> */}
           <span>
-            Our New Featured in this season has start, bring the rich dark and
-            warm style for Autumn.
+            Seamlessly blending the expertise of a traditional pharmacy with the
+            allure and efficacy of high-quality skincare products, delivering a
+            personalized and beauty experience.
           </span>
         </Box>
-        <Carousel props={data} />
+        <Carousel props={banners ? banners.detail : data} />
       </>
     );
   };
@@ -119,7 +161,7 @@ const HomePage = () => {
     return (
       <>
         {/* About Us */}
-        <div>
+        <div style={{ height: "700px" }}>
           <Box
             sx={{
               display: "flex",
@@ -127,7 +169,6 @@ const HomePage = () => {
               marginTop: "70px",
             }}
             py={8}
-            pb={5}
           >
             <h1>About Us</h1>
           </Box>
@@ -135,20 +176,20 @@ const HomePage = () => {
             <Grid container className="wrapper">
               <Grid className="column1" item md={6}>
                 <span>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Sapiente explicabo, maiores asperiores voluptas maxime aliquam
-                  officia ullam aspernatur commodi! Sint tempora accusantium
-                  perspiciatis accusamus expedita ex deleniti non eius natus.
+                  At Metaderma, we are dedicated to empowering individuals to
+                  embrace their unique beauty journey by providing access to
+                  trusted skincare solutions, expert advice, and a supportive
+                  community, fostering confidence and well-being for all.
                 </span>
               </Grid>
               <Grid className="column2" item md={6}>
-                <Card props={secondData} />
+                <Card props={secondData} style={{ width: "100%" }}/>
               </Grid>
             </Grid>
           </Box>
         </div>
         <Box className="framer-card" sx={{ display: "flex" }}>
-          <FramerCard props={framerData} />
+          <FramerCard props={frameImage} />
         </Box>
         {/* Featured Product */}
         <Box className="products" my={4}>
@@ -169,7 +210,7 @@ const HomePage = () => {
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Sapiente explicabo, maiores asperiores voluptas maxime aliquam
               </span>
-              <ShapeButton props={"Our Catalog"} to="/products"/>
+              <ShapeButton props={"Our Catalog"} to="/products" />
             </Grid>
             <Grid
               container
@@ -201,9 +242,15 @@ const HomePage = () => {
     );
   };
 
+  useEffect(() => {
+    FetchBannerAds();
+
+    FetchProduct();
+    console.log(frameImage)
+  }, []);
+
   return (
     <>
-
       <Header />
       <Body />
     </>

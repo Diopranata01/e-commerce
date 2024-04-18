@@ -2,11 +2,15 @@
         max-width: 1200px; /* Add this line to limit the maximum width */
         margin: 0 auto; /* Center the navbar horizontally */
         height: 70px;
-        background: #e5d8c7;
+        background: #fff;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0 20px;
+        position: fixed; /* Make the navbar fixed */
+        top: 0; /* Stick it to the top */
+        width: 100%; /* Take up the full width of the viewport */
+        z-index: 1000; /* Ensure it's on top of other content */
     .wrapper{
         display: flex;
         width: inherit;
@@ -23,22 +27,24 @@
             }
         }
         .middle-nav{
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 500;
             text-align: center;
             font-size: 30px;
             flex-grow: 1;
             padding-top: 16px;
-            letter-spacing: 3px;
+            letter-spacing: 7px;
+            width: 100%;
         }
         .right-nav{
             padding-top: 20px;
             .item{
                 display: flex;
-                float: right;
+                
                 column-gap: 25px;
                 padding-right: 10px;
                 .tooltip{
-                    color: #816252;
+                    color: #1DA8BB;
                     cursor: pointer;
                     font-size: 12;
                 }.tooltip-icon {

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { Box, Button, Tooltip, ClickAwayListener } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
-import { CheckroomOutlined } from "@mui/icons-material";
+import { CheckroomOutlined, LocalPharmacyOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 
 const LeftNavImage = styled("img")({
@@ -48,12 +48,12 @@ const Navbar = () => {
         {/* Left Navigation Image */}
         <Box className="left-nav" sx={{ width: { lg: 220, md: 120 } }}>
           <Link to="/">
-            <LeftNavImage src="/img/Ra's_Beauty_2.png" alt="" />
+            <LeftNavImage src="/img/Metaderma.JPEG" alt="" />
           </Link>
         </Box>
         {/* Middle Navigation */}
         <Box className="middle-nav" sx={{ width: { lg: 600, md: 450 } }}>
-          <span> RA's Beauty </span>
+          <span> Metaderma </span>
         </Box>
         {/* Right Navigation (Hide on Mobile) */}
         {!isMobile && (
@@ -92,7 +92,7 @@ const Navbar = () => {
                 disableFocusListener
                 disableTouchListener
               >
-                <CheckroomOutlined
+                <LocalPharmacyOutlined
                   className="tooltip-icon tooltip"
                   onClick={handleTooltipOpen}
                 />

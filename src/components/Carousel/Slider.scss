@@ -2,16 +2,18 @@
     padding-top: 0px;
     .container{
         display: flex;
-        width: inherit;
         height: fit-content;
         justify-content: center;
         padding-bottom: 30px;
         .carousel{
-            width: 1200px;
+            width: 1000px;
             display: inherit;
             img{
                 width: 100%;
+                height: auto; /* Ensures that the aspect ratio is maintained */
+                object-fit: cover; /* Keeps the aspect ratio and covers the entire space */
                 cursor: pointer;
+            
             }
         }
     }

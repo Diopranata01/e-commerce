@@ -11,8 +11,7 @@ export const Carousel = ({ props }) => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
     autoplay: true,
     swipeToSlide: true,
     autoplaySpeed: 2500,
@@ -26,7 +25,7 @@ export const Carousel = ({ props }) => {
   }, [props]);
 
   return (
-    <div className="slider">
+    <div className="slider" >
       <Box className="container">
         <Slider {...settings} className="carousel">
           {loading ? (
@@ -34,7 +33,7 @@ export const Carousel = ({ props }) => {
           ) : (
             data.map((item, index) => (
               <div key={index}>
-                <img src={item.url} alt={item.name} />
+                <img src={item.image} alt={item.name} />
               </div>
             ))
           )}
