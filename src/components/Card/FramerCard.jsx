@@ -5,8 +5,6 @@ import "./FramerCard.scss";
 export const FramerCard = ({ props }) => {
   // props
   const newData = props.detail;
-
-  console.log(newData);
   // data
   const [data, setData] = useState(newData);
 

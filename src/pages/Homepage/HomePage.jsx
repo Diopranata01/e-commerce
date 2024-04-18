@@ -193,7 +193,7 @@ const HomePage = () => {
         </Box>
         {/* Featured Product */}
         <Box className="products" my={4}>
-          <FeaturedProduct type="Featured" props={framerData} />
+          <FeaturedProduct type="Featured" props={frameImage} />
         </Box>
         {/* Discover More */}
         <Box className="card" my={15}>

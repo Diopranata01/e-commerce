@@ -8,7 +8,9 @@ import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const FeaturedProduct = ({ type, props }) => {
-  const data = props;
+  const data = props.detail;
+
+  console.log(data);
 
   const slidereRef = useRef(null);
 
