@@ -5,11 +5,12 @@ import { Card } from "../../components";
 import { Link } from "react-router-dom";
 import { FeaturedProduct } from "../../components";
 import { ProductCard } from "../../components/Card/ProductCard";
-import ListItemProduct from "../../api/Master/MasterProduct/ListItemProduct";
+import ListItemProduct from "../../api/Master/MasterProduct/ItemProduct";
 
 const Products = () => {
   const [dataProduct, setDataProduct] = useState([]);
   const [dataCategory, setDataCategory] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const secondData = {
     image:
@@ -45,13 +46,8 @@ const Products = () => {
     }
   };
 
-  useEffect(() => {
-    FetchProduct();
-    FetchCategory();
-  }, []);
-
-  return (
-    <>
+  const Banner = () => {
+    return (
       <Box sx={{ display: "flex" }}>
         <div className="header-products">
           <Container
@@ -79,9 +75,27 @@ const Products = () => {
           </Container>
         </div>
       </Box>
+    )
+  }
+
+  useEffect(() => {
+    setIsLoading(true);
+    FetchProduct();
+    FetchCategory();
+  }, []);
+
+  return (
+    <>
+    {/* Banner */}
+      <Banner />
+
+    {/* Featured Product */}
       <Box className="body-products">
         <FeaturedProduct props={dataProduct} type={"Featured"} />
       </Box>
+
+    
+    {/* Our Product */}
       <Box sx={{ display: "flex", justifyContent: "center" , marginTop: "50px"}}>
         <div className="header">
           <div className="title">

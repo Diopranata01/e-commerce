@@ -69,8 +69,7 @@ export const FeaturedProduct = ({ type, props }) => {
                     <Card props={item} />
                     <div className="details">
                       <Link
-                        // to={`/product/${item.id}`}
-                        to={`/products`}
+                        to={`/product/${item.id}`}
                         style={{ textDecoration: "none" }}
                       >
                         <h3>{item.name}</h3>

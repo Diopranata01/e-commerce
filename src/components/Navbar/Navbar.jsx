@@ -3,11 +3,11 @@ import "./Navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Box, Button, Tooltip, ClickAwayListener } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
-import { LocalPharmacyOutlined } from "@mui/icons-material";
+import { ArrowBackIos, LocalPharmacyOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 
 const LeftNavImage = styled("img")({
@@ -31,6 +31,9 @@ const LightTooltip = styled(({ className, ...props }) => (
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const tooltipRef = useRef();
+  const { id } = useParams();
+
+  console.log(id);
 
   const handleTooltipOpen = () => {
     setOpen(true);
@@ -46,10 +49,14 @@ const Navbar = () => {
     <div className="navbar">
       <div className="wrapper">
         {/* Left Navigation Image */}
-        <Box className="left-nav" sx={{ width: { lg: 220, md: 120 } }}>
-          <Link to="/">
-            <LeftNavImage src="/img/Metaderma.JPEG" alt="" />
-          </Link>
+        <Box className="left-nav" sx={{ width: { lg: 220, md: 120 }, display: "flex", alignItems: "center" }}>
+          {id ? (
+              <ArrowBackIos onClick={() => window.history.back()} />
+          ) : (
+            <Link to="/">
+              <LeftNavImage src="/img/Metaderma.JPEG" alt="" />
+            </Link>
+          )}
         </Box>
         {/* Middle Navigation */}
         <Box className="middle-nav" sx={{ width: { lg: 600, md: 450 } }}>
@@ -59,53 +66,53 @@ const Navbar = () => {
         {!isMobile && (
           <Box className="right-nav" sx={{ width: { lg: "auto" } }}>
             <div className="item">
-            <SearchIcon className="tooltip" />
-            <ClickAwayListener onClickAway={handleTooltipClose}>
-              <LightTooltip
-                ref={tooltipRef}
-                title={
-                  <div>
-                    <Link to="/" style={{ textDecoration: "none" }}>
-                      <Button sx={{ color: "black", width: "100%" }}>
-                        Women
-                      </Button>
-                    </Link>
-                    <Link to="/" style={{ textDecoration: "none" }}>
-                      <Button sx={{ color: "black", width: "100%" }}>
-                        Men
-                      </Button>
-                    </Link>
-                    <Link to="/" style={{ textDecoration: "none" }}>
-                      <Button sx={{ color: "black", width: "100%" }}>
-                        Kids
-                      </Button>
-                    </Link>
-                    <Link to="/" style={{ textDecoration: "none" }}>
-                      <Button sx={{ color: "black", width: "100%" }}>
-                        Shirts
-                      </Button>
-                    </Link>
-                  </div>
-                }
-                open={open}
-                onClose={handleTooltipClose}
-                disableFocusListener
-                disableTouchListener
-              >
-                <LocalPharmacyOutlined
-                  className="tooltip-icon tooltip"
-                  onClick={handleTooltipOpen}
-                />
-              </LightTooltip>
-            </ClickAwayListener>
-            <div className="cart-icon">
-              <ShoppingCartIcon className="tooltip" />
-              <span className="tooltip">0</span>
+              <SearchIcon className="tooltip" />
+              <ClickAwayListener onClickAway={handleTooltipClose}>
+                <LightTooltip
+                  ref={tooltipRef}
+                  title={
+                    <div>
+                      <Link to="/" style={{ textDecoration: "none" }}>
+                        <Button sx={{ color: "black", width: "100%" }}>
+                          Women
+                        </Button>
+                      </Link>
+                      <Link to="/" style={{ textDecoration: "none" }}>
+                        <Button sx={{ color: "black", width: "100%" }}>
+                          Men
+                        </Button>
+                      </Link>
+                      <Link to="/" style={{ textDecoration: "none" }}>
+                        <Button sx={{ color: "black", width: "100%" }}>
+                          Kids
+                        </Button>
+                      </Link>
+                      <Link to="/" style={{ textDecoration: "none" }}>
+                        <Button sx={{ color: "black", width: "100%" }}>
+                          Shirts
+                        </Button>
+                      </Link>
+                    </div>
+                  }
+                  open={open}
+                  onClose={handleTooltipClose}
+                  disableFocusListener
+                  disableTouchListener
+                >
+                  <LocalPharmacyOutlined
+                    className="tooltip-icon tooltip"
+                    onClick={handleTooltipOpen}
+                  />
+                </LightTooltip>
+              </ClickAwayListener>
+              <div className="cart-icon">
+                <ShoppingCartIcon className="tooltip" />
+                <span className="tooltip">0</span>
+              </div>
+              <Link to={"/login"}>
+                <PersonIcon className="tooltip" />
+              </Link>
             </div>
-            <Link>
-              <PersonIcon className="tooltip" />
-            </Link>
-          </div>
           </Box>
         )}
       </div>

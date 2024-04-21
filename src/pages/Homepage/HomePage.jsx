@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import { AutoAwesome } from "@mui/icons-material";
 import ShapeButton from "../../components/Buttons/ShapeButton";
 import { api } from "../../services/Service";
-import ListItemProduct from "../../api/Master/MasterProduct/ListItemProduct";
+import ItemProduct from "../../api/Master/MasterProduct/ItemProduct";
 
 
 const HomePage = () => {
@@ -24,62 +24,7 @@ const HomePage = () => {
     image:
       "https://metaderma.id/wp-content/uploads/2023/06/DSC07202-scaled.jpg",
   };
-  const framerData = [
-    {
-      id: 1,
-      col: "1",
-      row: "1",
-      name: "Brown Casual",
-      price: 500,
-      image:
-        "https://images.unsplash.com/photo-1661911853406-1f1b18b7af7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDQyfFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      id: 2,
-      col: "1",
-      row: "2",
-      name: "Autumn Shirt",
-      price: 230,
-      image:
-        "https://images.unsplash.com/photo-1668911240626-7cb28ef123ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDQxfFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      id: 3,
-      col: "1",
-      row: "2",
-      name: "Crop Top",
-      price: 150,
-      image:
-        "https://images.unsplash.com/photo-1669303782833-a12efcc2be87?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDY0fFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      id: 4,
-      col: "2",
-      row: "1",
-      name: "Dark Tourqe Dress",
-      price: 680,
-      image:
-        "https://images.unsplash.com/photo-1668615561048-7df2e1462ee9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDk2fFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      id: 5,
-      col: "2",
-      row: "1",
-      name: "Dark Casual Dress",
-      price: 500,
-      image:
-        "https://images.unsplash.com/photo-1668615522788-4144e6f4b22e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      id: 6,
-      col: "2",
-      row: "2",
-      name: "Plain Shirt",
-      price: 400,
-      image:
-        "https://images.unsplash.com/photo-1669156130305-2104f8c246a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDc4fFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-  ];
+  
   const data = [
     {
       name: "pict1",
@@ -124,7 +69,7 @@ const HomePage = () => {
 
   const FetchProduct = async () => {
     try {
-      const response = await ListItemProduct.getList();
+      const response = await ItemProduct.getList();
       if (!response.data.status) {
         throw new Error("Network response was not ok");
       }

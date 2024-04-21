@@ -1,40 +1,25 @@
 import React, { useState } from "react";
 import {TextField } from "@mui/material";
 
-export const TextFieldInput = ({ props, onChange }) => {
+export const TextFieldInput = ({ props, onChange, value, name }) => {
     
-  const [value, setValue] = useState('');
+  // const [value, setValue] = useState('');
   const [error, setError] = useState(false);
   const { text } = props;
 
-  const handleChange = (event) => {
-    const inputValue = event.target.value;
-    setValue(inputValue);
-    
-    // Check if the input value is empty
-    if (inputValue.trim() === '') {
-      setError(true);
-    } else {
-      setError(false);
-    }
-
-    
-    // Call the onChange function passed from the parent component
-    if (onChange) {
-        onChange(value);
-      }
-  };
+  console.log(value)
 
   return (
     <>
       <TextField
         required
+        name={name}
         error={error}
         helperText={error ? 'This field is required' : ''} 
         id="outlined-required"
         label={text? text : 'Required'}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         InputLabelProps={{
           style: { color: "black" },
         }}

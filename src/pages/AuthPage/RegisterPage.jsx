@@ -105,7 +105,7 @@ const RegisterPage = () => {
                   textAlign: "center",
                 }}
               >
-                <h1>Login</h1>
+                <h1>Register</h1>
                 <Box
                   component="form"
                   sx={{
@@ -157,7 +157,7 @@ const RegisterPage = () => {
                 <Box sx={{ 
                   // border: "1px solid red",
                   paddingTop: "20px",
-                  paddingRight: isSmallDevice ? "0px" : isMediumDevice? "0px" : "270px",
+                  paddingRight: isSmallDevice ? "0px" : isMediumDevice? "0px" : "320px",
                  }}>
                   <ShapeButton props={"Sign Up"} to={''} isLoading={loading} handleClick={handleClick}/>
                 </Box>

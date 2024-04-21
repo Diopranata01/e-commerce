@@ -11,7 +11,7 @@ const ShapeButtonStyle = styled(Button)({
   border: "1px solid black",
 });
 
-const ShapeButton = ({ props, to, isLoading, handleClick }) => {
+const ShapeButton = ({ props, to, isLoading, handleSubmit }) => {
   const isLink = to ? true : false;
 
   if (isLink && !isLoading) {
@@ -30,7 +30,7 @@ const ShapeButton = ({ props, to, isLoading, handleClick }) => {
       <ShapeButtonStyle
         variant="outlined"
         color="inherit"
-        onClick={handleClick}
+        onClick={handleSubmit}
       >
         {props || "Button"}
       </ShapeButtonStyle>

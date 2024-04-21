@@ -1,10 +1,13 @@
-import RouteConfiguration from './route/RouteConfiguration';
-import "./App.scss"
+import RouteConfiguration from "./route/RouteConfiguration";
+import "./App.scss";
+import { AuthContextProvider } from "./utilities/context/AuthContext";
 
 function App() {
   return (
     <div className="App">
-      <RouteConfiguration/>
+      <AuthContextProvider>
+        <RouteConfiguration />
+      </AuthContextProvider>
     </div>
   );
 }

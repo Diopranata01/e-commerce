@@ -1,13 +1,16 @@
 import Services from "../../../services";
 
-class ListItemProduct {
+class ItemProduct {
     getList () {
         return Services.get('/product/?level=OTC')
     }
     getListCategory () {
         return Services.get('/product/category/')
     }
+    getProductDetail (id) {
+        return Services.get(`/product/${id}/`)
+    }
 }
 
 
-export default new ListItemProduct();
+export default new ItemProduct();

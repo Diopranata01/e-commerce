@@ -5,6 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextFieldInput } from "../../components/Form Input/TextFieldInput";
 import ShapeButton from "../../components/Buttons/ShapeButton";
+import { useAuth } from "../../utilities/context/AuthContext";
 
 const theme1 = createTheme({
   palette: {
@@ -16,21 +17,31 @@ const theme1 = createTheme({
 });
 
 const Login = () => {
+  const { login } = useAuth();
   const theme = useTheme();
   const isSmallDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumDevice = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
-  const [inputValue, setInputValue] = useState("");
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
 
-  console.log(inputValue);
+  console.log(formData);
 
-  const handleInputChange = (value) => {
-    setInputValue(value);
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleClick = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     setLoading(true);
+    
+    const { username, password } = formData;
+
+    try {
+      login({username, password});
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
 
     // Simulate an asynchronous action (e.g., fetching data) with setTimeout
     setTimeout(() => {
@@ -119,6 +130,8 @@ const Login = () => {
                   <TextFieldInput
                     props={{ text: "Username" }}
                     onChange={handleInputChange}
+                    value={formData.username}
+                    name="username"
                   />
                 </ThemeProvider>
               </Box>
@@ -135,15 +148,17 @@ const Login = () => {
                   <TextFieldInput
                     props={{ text: "Password" }}
                     onChange={handleInputChange}
+                    value={formData.password}
+                    name="password"
                   />
                 </ThemeProvider>
               </Box>
               <Box sx={{ 
                 // border: "1px solid red",
                 paddingTop: "20px",
-                paddingLeft: isSmallDevice ? "0px" : isMediumDevice? "0px" : "270px",
+                paddingLeft: isSmallDevice ? "0px" : isMediumDevice? "0px" : "330px",
                }}>
-                <ShapeButton props={"Login"} to={''} isLoading={loading} handleClick={handleClick}/>
+                <ShapeButton props={"Login"} to={''} isLoading={loading} handleSubmit={handleSubmit}/>
               </Box>
             </Grid>
           </Grid>
