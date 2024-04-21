@@ -4,7 +4,7 @@ import "./FramerCard.scss";
 
 export const FramerCard = ({ props }) => {
   // props
-  const newData = props.detail;
+  const newData = props;
   // data
   const [data, setData] = useState(newData);
 
@@ -77,14 +77,6 @@ export const FramerCard = ({ props }) => {
               )}
             </Grid>
           </Grid>
-
-          {/* <Grid className="col2" item md={6} sx={{ display: "inherit" }}>
-            <Box className="row1" sx={{ display: "flex" }}>
-              {data?.map((item, index) => (
-                <img alt="img" key={index} src={item.image} />
-              ))}
-            </Box>
-          </Grid> */}
         </Grid>
       </Box>
     </>

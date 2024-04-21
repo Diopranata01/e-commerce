@@ -11,14 +11,14 @@ import { Box, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { AutoAwesome } from "@mui/icons-material";
 import ShapeButton from "../../components/Buttons/ShapeButton";
-import { api } from "../../services";
+import { api } from "../../services/Service";
+import ListItemProduct from "../../api/Master/MasterProduct/ListItemProduct";
 
 
 const HomePage = () => {
   const [banners, setBanners] = useState([]);
-  const [frameImage, setFrameImage] = useState([]);
+  const [dataProduct, setDataProduct] = useState([]);
 
-  console.log(frameImage);
 
   const secondData = {
     image:
@@ -110,7 +110,7 @@ const HomePage = () => {
   const FetchBannerAds = async () => {
     try {
       const response = await fetch(
-        `${api}/api/banner/?is_active=true`
+        `${api}/banner/?is_active=true`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -124,28 +124,24 @@ const HomePage = () => {
 
   const FetchProduct = async () => {
     try {
-      const response = await fetch(
-        `${api}/api/product/?level=OTC`
-      );
-      if (!response.ok) {
+      const response = await ListItemProduct.getList();
+      if (!response.data.status) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
-      setFrameImage(data)  ;
+
+      const data = response.data.detail;
+
+      setDataProduct(data);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching product:", error);
     }
-  }
+  };
 
   const Header = () => {
     return (
       <>
         <Box className="heading" sx={{ display: "flex" }}>
           <h1>Our Vision</h1>
-          {/* <span>
-            Our New Featured Product in this month has started, staring beauty
-            item product, body works, and more .
-          </span> */}
           <span>
             Seamlessly blending the expertise of a traditional pharmacy with the
             allure and efficacy of high-quality skincare products, delivering a
@@ -189,14 +185,14 @@ const HomePage = () => {
           </Box>
         </div>
         <Box className="framer-card" sx={{ display: "flex" }}>
-          <FramerCard props={frameImage} />
+          <FramerCard props={dataProduct} />
         </Box>
         {/* Featured Product */}
         <Box className="products" my={4}>
-          <FeaturedProduct type="Featured" props={frameImage} />
+          <FeaturedProduct type="Featured" props={dataProduct} />
         </Box>
         {/* Discover More */}
-        <Box className="card" my={15}>
+        <Box className="card" my={10}>
           <Grid container className="wrapper">
             <Grid className="column-about" item md={6} px={10} gap={2}>
               <Stack sx={{ display: "flex", alignItems: "start" }}>
@@ -223,7 +219,7 @@ const HomePage = () => {
                 <StyledCard
                   style={{ maxWidth: "300px", maxHeight: "400px" }}
                   src={
-                    "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?q=80&w=1286&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    "https://images.unsplash.com/photo-1598412795976-9c195182ee01?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTl8fGJlYXV0eSUyMHByb2R1Y3RzfGVufDB8fDB8fHww"
                   }
                 />
               </Grid>
@@ -231,7 +227,7 @@ const HomePage = () => {
                 <StyledCard
                   style={{ maxWidth: "300px", maxHeight: "400px" }}
                   src={
-                    "https://images.unsplash.com/photo-1654512697735-d7ff21350443?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJlYXV0eSUyMHByb2R1Y3RzfGVufDB8fDB8fHww"
                   }
                 />
               </Grid>
@@ -246,7 +242,6 @@ const HomePage = () => {
     FetchBannerAds();
 
     FetchProduct();
-    console.log(frameImage)
   }, []);
 
   return (
