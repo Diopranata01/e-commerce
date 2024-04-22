@@ -4,7 +4,7 @@ import "./FeaturedProducts.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Slider from "react-slick";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const FeaturedProduct = ({ type, props }) => {
@@ -66,16 +66,16 @@ export const FeaturedProduct = ({ type, props }) => {
               <Slider {...settings} className="carousel" ref={slidereRef}>
                 {data?.map((item, index) => (
                   <div key={index}>
-                    <Card props={item} />
-                    <div className="details">
-                      <Link
-                        to={`/product/${item.id}`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <h3>{item.name}</h3>
-                      </Link>
-                      <h3>{`$${item.price}`}</h3>
-                    </div>
+                    <Link
+                      to={`/product/${item.id}`}
+                      className="link-no-decoration"
+                    >
+                      <Card props={item} />
+                      <div className="details">
+                        <Typography>{item.name}</Typography>
+                        <Typography>{`Rp.${item.price}`}</Typography>
+                      </div>
+                    </Link>
                   </div>
                 ))}
               </Slider>

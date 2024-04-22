@@ -1,14 +1,15 @@
-import Services from "../../../services";
+import api from "../../../services";
+// import Services from "../../../services";
 
 class ItemProduct {
     getList () {
-        return Services.get('/product/?level=OTC')
+        return api.get('/product/?level=OTC')
     }
     getListCategory () {
-        return Services.get('/product/category/')
+        return api.get('/product/category/')
     }
     getProductDetail (id) {
-        return Services.get(`/product/${id}/`)
+        return api.get(`/product/${id}/`)
     }
 }
 

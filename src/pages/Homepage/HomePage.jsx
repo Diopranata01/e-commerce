@@ -11,63 +11,40 @@ import { Box, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { AutoAwesome } from "@mui/icons-material";
 import ShapeButton from "../../components/Buttons/ShapeButton";
-import { api } from "../../services/Service";
 import ItemProduct from "../../api/Master/MasterProduct/ItemProduct";
-
+import BannerProduct from "../../api/Master/BannerProduct/BannerProduct";
 
 const HomePage = () => {
   const [banners, setBanners] = useState([]);
   const [dataProduct, setDataProduct] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
 
   const secondData = {
     image:
       "https://metaderma.id/wp-content/uploads/2023/06/DSC07202-scaled.jpg",
   };
-  
-  const data = [
-    {
-      name: "pict1",
-      url: "https://images.unsplash.com/photo-1670718089430-d75ba6c1a194?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEwfFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      name: "pict2",
-      url: "https://images.unsplash.com/photo-1670359092555-d4a4175d5503?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDIyfFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      name: "pict3",
-      url: "https://images.unsplash.com/photo-1667337779766-c0166925be12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      name: "pict2",
-      url: " https://images.unsplash.com/photo-1646004882668-2e3936d59866?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDY3fFM0TUtMQXNCQjc0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      name: "pict3",
-      url: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHBlcmZ1bWV8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
-    },
-    {
-      name: "pict1",
-      url: "https://images.unsplash.com/photo-1652087069456-06fb70235fa2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDl8UzRNS0xBc0JCNzR8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=60",
-    },
-  ];
 
   const FetchBannerAds = async () => {
+    setIsLoading(true);
     try {
-      const response = await fetch(
-        `${api}/banner/?is_active=true`
-      );
-      if (!response.ok) {
+      const response = await BannerProduct.getListBanner();
+      if (!response.data.status) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
+      const data = response.data.detail;
       setBanners(data);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+
     } catch (error) {
       console.error("Error fetching banners:", error);
     }
   };
 
   const FetchProduct = async () => {
+    setIsLoading(true);
     try {
       const response = await ItemProduct.getList();
       if (!response.data.status) {
@@ -93,7 +70,7 @@ const HomePage = () => {
             personalized and beauty experience.
           </span>
         </Box>
-        <Carousel props={banners ? banners.detail : data} />
+        <Carousel props={banners ? banners : "no data"} isLoading={isLoading} />
       </>
     );
   };
@@ -124,7 +101,7 @@ const HomePage = () => {
                 </span>
               </Grid>
               <Grid className="column2" item md={6}>
-                <Card props={secondData} style={{ width: "100%" }}/>
+                <Card props={secondData} style={{ width: "100%" }} />
               </Grid>
             </Grid>
           </Box>
@@ -151,7 +128,7 @@ const HomePage = () => {
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Sapiente explicabo, maiores asperiores voluptas maxime aliquam
               </span>
-              <ShapeButton props={"Our Catalog"} to="/products" />
+              <ShapeButton props={"Our Product"} to="/products" />
             </Grid>
             <Grid
               container

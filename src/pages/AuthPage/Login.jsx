@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextFieldInput } from "../../components/Form Input/TextFieldInput";
 import ShapeButton from "../../components/Buttons/ShapeButton";
 import { useAuth } from "../../utilities/context/AuthContext";
+import { Link } from "react-router-dom";
 
 const theme1 = createTheme({
   palette: {
@@ -25,8 +26,6 @@ const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
 
-  console.log(formData);
-
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -34,11 +33,11 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     const { username, password } = formData;
 
     try {
-      login({username, password});
+      login({ username, password });
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -129,7 +128,9 @@ const Login = () => {
                 <ThemeProvider theme={theme1}>
                   <TextFieldInput
                     props={{ text: "Username" }}
-                    onChange={handleInputChange}
+                    onChange={(value) =>
+                      handleInputChange({ target: { name: "username", value } })
+                    }
                     value={formData.username}
                     name="username"
                   />
@@ -147,18 +148,44 @@ const Login = () => {
                 <ThemeProvider theme={theme1}>
                   <TextFieldInput
                     props={{ text: "Password" }}
-                    onChange={handleInputChange}
+                    onChange={(value) =>
+                      handleInputChange({ target: { name: "password", value } })
+                    }
                     value={formData.password}
                     name="password"
+                    type={"password"}
                   />
                 </ThemeProvider>
               </Box>
-              <Box sx={{ 
-                // border: "1px solid red",
-                paddingTop: "20px",
-                paddingLeft: isSmallDevice ? "0px" : isMediumDevice? "0px" : "330px",
-               }}>
-                <ShapeButton props={"Login"} to={''} isLoading={loading} handleSubmit={handleSubmit}/>
+              <Box
+                sx={{
+                  // border: "1px solid red",
+                  display: "flex",
+                  paddingTop: "20px",
+                  gap: "45px",
+                  justifyContent: "space-evenly",
+                  paddingInline: isSmallDevice
+                  ? "0px"
+                  : isMediumDevice
+                  ? "155px"
+                  : "0px",
+                }}
+              >
+                <Typography>
+                  Don't have an account?{" "}
+                  <Link
+                    to="/register"
+                    style={{ textDecoration: "none", color: "#1DA8BB" }}
+                  >
+                    Sign Up
+                  </Link>
+                </Typography>
+                <ShapeButton
+                  props={"Login"}
+                  to={""}
+                  isLoading={loading}
+                  handleSubmit={handleSubmit}
+                />
               </Box>
             </Grid>
           </Grid>

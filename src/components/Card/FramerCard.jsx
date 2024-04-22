@@ -8,19 +8,6 @@ export const FramerCard = ({ props }) => {
   // data
   const [data, setData] = useState(newData);
 
-  // const col1row1Filter = data.filter(
-  //   (item) => item.row === "1" && item.col === "1"
-  // );
-  // const col2row1Filter = data.filter(
-  //   (item) => item.row === "1" && item.col === "2"
-  // );
-  // const col1row2Filter = data.filter(
-  //   (item) => item.row === "2" && item.col === "1"
-  // );
-  // const col2row2Filter = data.filter(
-  //   (item) => item.row === "2" && item.col === "2"
-  // );
-
   return (
     <>
       <Box className="card-box" sx={{ flexGrow: 1 }}>

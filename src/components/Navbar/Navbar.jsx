@@ -1,14 +1,21 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link, useParams } from "react-router-dom";
-import { Box, Button, Tooltip, ClickAwayListener } from "@mui/material";
+import {
+  Box,
+  Button,
+  Tooltip,
+  ClickAwayListener,
+  TextField,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
 import { ArrowBackIos, LocalPharmacyOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
+import { useSearch } from "../../utilities/context/SearchContext";
 
 const LeftNavImage = styled("img")({
   width: "100%",
@@ -30,10 +37,19 @@ const LightTooltip = styled(({ className, ...props }) => (
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [searchTooltip, setSearchTooltip] = useState(false);
   const tooltipRef = useRef();
   const { id } = useParams();
 
-  console.log(id);
+  const { searchQuery, setSearchQuery } = useSearch();
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleTooltipSearch = (event) => {
+    setSearchTooltip(true);
+  };
 
   const handleTooltipOpen = () => {
     setOpen(true);
@@ -45,13 +61,26 @@ const Navbar = () => {
 
   const isMobile = useMediaQuery("(max-width:600px)");
 
+  useEffect(() => {
+    if(searchTooltip === false){
+      setSearchQuery("");
+    }
+  },[searchTooltip])
+
   return (
     <div className="navbar">
       <div className="wrapper">
         {/* Left Navigation Image */}
-        <Box className="left-nav" sx={{ width: { lg: 220, md: 120 }, display: "flex", alignItems: "center" }}>
+        <Box
+          className="left-nav"
+          sx={{
+            width: { lg: 220, md: 120 },
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           {id ? (
-              <ArrowBackIos onClick={() => window.history.back()} />
+            <ArrowBackIos onClick={() => window.history.back()} />
           ) : (
             <Link to="/">
               <LeftNavImage src="/img/Metaderma.JPEG" alt="" />
@@ -59,14 +88,38 @@ const Navbar = () => {
           )}
         </Box>
         {/* Middle Navigation */}
-        <Box className="middle-nav" sx={{ width: { lg: 600, md: 450 } }}>
+        <Box className="middle-nav">
           <span> Metaderma </span>
         </Box>
         {/* Right Navigation (Hide on Mobile) */}
         {!isMobile && (
           <Box className="right-nav" sx={{ width: { lg: "auto" } }}>
             <div className="item">
-              <SearchIcon className="tooltip" />
+              {searchTooltip ? (
+                <Box
+                  component="form"
+                  sx={{
+                    "& .MuiTextField-root": { m: 0, width: "10ch"},
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  autoComplete="off"
+                >
+                  <TextField
+                    id="standard-basic"
+                    label="Search"
+                    variant="standard"
+                    value={searchQuery}
+                    InputProps={{ style: { marginTop: 7, fontSize: "14px"} }} 
+                    InputLabelProps={{ shrink: true ,
+                      style: { fontSize: "14px" }  }} 
+                    onBlur={() => setSearchTooltip(false)}
+                    onChange={handleSearchChange}
+                  />
+                </Box>
+              ) : (
+                <SearchIcon className="tooltip" onClick={handleTooltipSearch} />
+              )}
               <ClickAwayListener onClickAway={handleTooltipClose}>
                 <LightTooltip
                   ref={tooltipRef}
@@ -110,7 +163,7 @@ const Navbar = () => {
                 <span className="tooltip">0</span>
               </div>
               <Link to={"/login"}>
-                <PersonIcon className="tooltip" />
+                <PersonIcon className="person-icon tooltip" />
               </Link>
             </div>
           </Box>

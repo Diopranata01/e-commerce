@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import ListItemProduct from "../../api/Master/MasterProduct/ItemProduct";
-import { Container, Divider, Grid, Typography } from "@mui/material";
+import { Container, Divider, Grid, Skeleton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { Grade, StarHalf, StarOutline } from "@mui/icons-material";
 import ShapeButton from "../../components/Buttons/ShapeButton";
@@ -12,11 +12,13 @@ import ShapeButton from "../../components/Buttons/ShapeButton";
 const Product = () => {
   const { id } = useParams();
   const [dataProduct, setDataProduct] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
   const isSmallDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumDevice = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
   const FetchDetailProduct = async () => {
+    setIsLoading(true);
     try {
       const response = await ListItemProduct.getProductDetail(id);
       if (!response.data.status) {
@@ -26,6 +28,9 @@ const Product = () => {
       const data = response.data.detail;
 
       setDataProduct(data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     } catch (error) {
       console.error("Error fetching product:", error);
     }
@@ -42,58 +47,69 @@ const Product = () => {
           // border: "1px solid black",
           display: "flex",
           justifyContent: "center",
+          alignItems: isLoading? "center" : "",
           flexDirection: "column",
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            padding: "30px",
-          }}
-        >
-          <img
-            src={dataProduct.image}
-            alt="Responsive"
-            style={{
-              width: isSmallDevice ? "30%" : isMediumDevice ? "20%" : "40%",
-              height: "auto",
-            }} // Make the image responsive
-          />
-        </Box>
+        {isLoading ? (
+          <Grid item xs={12} md={6}>
+            <Skeleton
+              variant="rectangular"
+              width={270}
+              height={248}
+              sx={{ borderRadius: "15px" }}
+            />
+          </Grid>
+        ) : (
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              padding: "30px",
+            }}
+          >
+            <img
+              src={dataProduct.image}
+              alt="Responsive"
+              style={{
+                width: isSmallDevice ? "30%" : isMediumDevice ? "20%" : "40%",
+                height: "auto",
+              }} // Make the image responsive
+            />
+          </Box>
+        )}
         <Stack
           direction={"row"}
           spacing={1}
           sx={{ display: "flex", justifyContent: "space-evenly" }}
         >
-          {dataProduct.materials && dataProduct.materials.length > 0? (
-            dataProduct.materials?.map((material, index) => (
-              <Box
-                sx={{
-                  justifyContent: "center",
-                  boxShadow: "rgba(0, 0, 0, 0.24) -9px 13px 18px",
-                  borderRadius: "5px",
-                  width: "100px",
-                }}
-              >
-                <img
-                  key={index}
-                  src={material.image}
-                  alt="detail product"
-                  style={{
-                    width: isSmallDevice
-                      ? "30%"
-                      : isMediumDevice
-                      ? "20%"
-                      : "100%",
-                    height: "auto",
+          {dataProduct.materials && dataProduct.materials.length > 0
+            ? dataProduct.materials?.map((material, index) => (
+                <Box
+                  sx={{
+                    justifyContent: "center",
+                    boxShadow: "rgba(0, 0, 0, 0.24) -9px 13px 18px",
+                    borderRadius: "5px",
+                    width: "100px",
                   }}
-                />
-              </Box>
-            ))
-          ) : null
-                 }
+                >
+                  <img
+                    key={index}
+                    src={material.image}
+                    alt="detail product"
+                    style={{
+                      width: isSmallDevice
+                        ? "30%"
+                        : isMediumDevice
+                        ? "20%"
+                        : "100%",
+                      height: "auto",
+                    }}
+                  />
+                </Box>
+              ))
+            : null}
         </Stack>
       </Grid>
     );
@@ -101,7 +117,6 @@ const Product = () => {
 
   useEffect(() => {
     FetchDetailProduct();
-    console.log(dataProduct);
   }, []);
 
   return (

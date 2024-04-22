@@ -1,3 +1,3 @@
-import Services from './Service'
+import {api} from './Service'
 
-export default Services
+export default api;

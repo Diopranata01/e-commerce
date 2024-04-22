@@ -1,16 +1,16 @@
-import Services from "../../services";
+import api from "../../services";
 
 class Authentication {
     login (data) {
-        return Services.post('/auth/login/', data)
+        return api.post('/auth/login/', data)
     }
 
     register (data) {
-        return Services.post('/customer/register/', data)
+        return api.post('/customer/registration/', data)
     }
 
     registerOtp (data) {
-        return Services.post('/customer/register/otp/', data)
+        return api.post('/customer/registration/otp/', data)
     }
 }
 
