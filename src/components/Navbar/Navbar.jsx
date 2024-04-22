@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { Box, Button, Tooltip, ClickAwayListener } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
-import { CheckroomOutlined, LocalPharmacyOutlined } from "@mui/icons-material";
+import { LocalPharmacyOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 
 const LeftNavImage = styled("img")({

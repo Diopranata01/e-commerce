@@ -1,1 +1,3 @@
-export * from "./Service"
+import Services from './Service'
+
+export default Services

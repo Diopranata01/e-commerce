@@ -8,6 +8,8 @@ import Layout from './Layout';
 import HomePage from '../pages/Homepage/HomePage';
 import Products from '../pages/Products/Products';
 import Product from '../pages/Product/Product';
+import Login from '../pages/AuthPage/Login';
+import RegisterPage from '../pages/AuthPage/RegisterPage';
 
 const RouteConfiguration = () => {
   return (
@@ -18,8 +20,11 @@ const RouteConfiguration = () => {
                 <Route path='products/' element={<Products/>}/> 
                 <Route path='product/:category/:id' element={<Product/>}/> 
                 <Route path='product/:id' element={<Product/>}/> 
-                {/* <Route path='product/:id' element={<Product/>}/>  */}
+                <Route path='product/:id' element={<Product/>}/> 
             </Route> 
+           {/* <Route path='/' element={<RegisterPage/>}>
+                
+           </Route>  */}
         </Routes>
     </BrowserRouter>
   )
